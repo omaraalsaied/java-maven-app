@@ -1,7 +1,8 @@
-pipeline { 
+def gv = groovy
+
+pipeline {
 
     agent any  
-
     environment {
         NEW_VERSION = '1.3.0'
         GITHUB_CREDENTIALS = credentials('github-credentials')
@@ -13,42 +14,46 @@ pipeline {
     // }
 
     parameters { 
-        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeTests', defaultValue: true , description: '')
+        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], descreption: '')
+        booleanParam(name: 'executeTests', defaultValue: true , descreption: '')
     }
     stages {
 
-        stage("pull"){
+        stage("init"){
             steps { 
-                echo "pulling the application"
-              
+                script {
+                    gv = load "script.groovy"
+                }
             }
         }
 
-        stage("build"){
-            steps { 
-                echo "building the application"
-                echo "building version ${NEW_VERSION} "
-                
-
+        stage("buid") {
+            steps {
+                script { 
+                    gv.buildApp()
+                }
             }
         }
 
         stage("test"){
             when {
-                expression { params.executeTests }
+                exprerssion {
+                    params.executeTests
+                }
             }
             steps { 
-                echo "testing the application"
-                // code to test the application 
+               script {
+                    gv.testApp()
+               }
             }
         }
 
         stage("deploy"){
 
             steps { 
-                echo "deploying the application"
-                echo "deploying version ${params.VERSION}"
+                script { 
+                    gv.deployApp()
+                }
             }
 
         }
