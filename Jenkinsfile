@@ -37,9 +37,7 @@ pipeline {
 
         stage("test"){
             when {
-                exprerssion {
-                    params.executeTests
-                }
+                expression {params.executeTests}
             }
             steps { 
                script {
