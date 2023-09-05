@@ -37,7 +37,7 @@ pipeline {
 
         stage("test"){
             when {
-                exprerssion {
+                expression {
                     params.executeTests
                 }
             }
