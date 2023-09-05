@@ -21,8 +21,7 @@ pipeline {
         stage("pull"){
             steps { 
                 echo "pulling the application"
-                echo "github credeintails are: ${GITHUB_CREDENTIALS}"
-
+              
             }
         }
 
