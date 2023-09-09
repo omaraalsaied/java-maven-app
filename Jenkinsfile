@@ -21,10 +21,14 @@ pipeline {
 
 
         stage("build jar") {
-            steps { 
-                script {
-                  buildApp()
+            steps {
+                when { 
+                    expression {BRANCH_NAME == 'master'}
                 }
+                    script {
+                    buildApp 'omaraalsaied/java-maven-app' '1.3'
+                    }
+                
             }
         }
 
