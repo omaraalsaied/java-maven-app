@@ -23,7 +23,7 @@ pipeline {
         stage("build jar") {
             steps {
                 when { 
-                    expression {BRANCH_NAME == 'master'}
+                    expression {BRANCH_NAME == 'master' || BRANCH_NAME == 'jenkins-shared-lib'}
                 }
                     script {
                     buildApp 'omaraalsaied/java-maven-app' '1.3'
