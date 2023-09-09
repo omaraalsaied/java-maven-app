@@ -33,7 +33,7 @@ pipeline {
         stage("Dockerizing") {
             steps { 
                 script {
-                    dockerizingApp 'omaraalsaied/java-maven-app:1.3'
+                    dockerizingApp('omaraalsaied/java-maven-app:1.3')
                 }
             }
         }
