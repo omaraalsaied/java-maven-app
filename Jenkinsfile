@@ -26,7 +26,7 @@ pipeline {
                     expression {BRANCH_NAME == 'master' || BRANCH_NAME == 'jenkins-shared-lib'}
                 }
                     script {
-                    buildApp 'omaraalsaied/java-maven-app' '1.3'
+                    buildApp 'omaraalsaied/java-maven-app:1.3' 
                     }
                 
             }
