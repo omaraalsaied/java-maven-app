@@ -20,6 +20,7 @@ public class Application {
         Logger log = LoggerFactory.getLogger(Application.class);
         log.info("Java app started");
          log.info("jenkins should get a webhook !");
+         log.info("jenkins should get a webhook 2 !");
     }
 
     public String getStatus() {
