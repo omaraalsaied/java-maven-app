@@ -11,6 +11,18 @@ pipeline {
 
     stages {
 
+        stage("version incrementation") {
+            steps {
+                echo "incrementing app version" 
+                sh 'mvn build-helper:parse-version versions:set \
+                -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
+                versions:commit'
+                def matcher = readFile('pom.xml') =~ ' <version>(.+)</version>'
+                def version = matcher[0][1]
+                env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+            }
+        }
+
         stage("init") {
             steps {
                 script {
@@ -31,7 +43,7 @@ pipeline {
         stage("Dockerizing") {
             steps { 
                 script {
-                  dockerizingApp 'omaraalsaied/java-maven-app:1.3'
+                  dockerizingApp "omaraalsaied/java-maven-app:${IMAGE_NAME}"
                 }
             }
         }
