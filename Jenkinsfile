@@ -68,19 +68,19 @@ pipeline {
         stage("commiting version update") {
         steps {
             script {
-                 withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PWD', usernameVariable: 'USER')]) {
+                withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PWD', usernameVariable: 'USER')]) {
                     sh 'git config  user.email "localjenkins@example.com"'
                     sh 'git config user.name "jenkins"'
-                    
+
                     sh 'git status'
                     sh 'git branch'
                     sh 'git config --list'
-                    
+
                     sh "git remote set-url origin https://${USER}:${PWD}@github.com/omaraalsaied/java-maven-app.git"
                     sh 'git add .'
                     sh 'git commit -m "ci: version increment"'
                     sh 'git push origin master'
-                 }
+                }
             }
         }
         }
