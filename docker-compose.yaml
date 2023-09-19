@@ -1,0 +1,15 @@
+version: '3.8'
+services: 
+  java-maven-app:
+    image: omaraalsaied/java-maven-app:lts
+    ports:
+      - 8888:8080
+  postgres: 
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment:
+    - POSTGRES_PASSWORD:my-pwd
+
+
+     
