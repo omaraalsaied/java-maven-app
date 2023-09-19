@@ -1,7 +1,7 @@
 version: '3.8'
 services: 
   java-maven-app:
-    image: omaraalsaied/java-maven-app:lts
+    image: omaraalsaied/java-maven-app
     ports:
       - 8888:8080
   postgres: 
