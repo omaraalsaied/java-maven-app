@@ -18,7 +18,7 @@ pipeline {
                     sh 'mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit'
                     def matcher = readFile('pom.xml') =~ ' <version>(.+)</version>'
                     def version = matcher[0][1]
-                    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+                    env.IMAGE_TAG = "$version-$BUILD_NUMBER"
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
         stage("Dockerizing") {
             steps { 
                 script {
-                  dockerizingApp "omaraalsaied/java-maven-app:${IMAGE_NAME}"
+                  dockerizingApp "omaraalsaied/java-maven-app:${IMAGE_TAG}"
                 }
             }
         }
@@ -60,7 +60,9 @@ pipeline {
             steps {
                 script {
                      echo 'deploying the application'
-                     def shellCmd = "bash ./server-cmds.sh"
+
+                     def shellCmd = "bash ./server-cmds.sh ${IMAGE_TAG}"
+
                     sshagent(['ec2-server-key']) {
 			            sh "scp server-cmds.sh ec2-user@13.38.251.191:/home/ec2-user"
 			            sh "scp docker-compose.yaml ec2-user@13.38.251.191:/home/ec2-user"
